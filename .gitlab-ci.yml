@@ -1,0 +1,12 @@
+image: alpine:latest
+
+stages:
+  - copy
+
+before_script:
+  - mkdir -p public
+
+copy_experiments:
+  stage: copy
+  script:
+    - cp -r indentation/* public
