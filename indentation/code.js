@@ -9,9 +9,13 @@
 // WICHTIG: Man sollte new_random_integer nur innerhalb  der Lambda-Funktion ausführen, also NICHT
 // an einer anderen Stelle, damit man ein reproduzierbares Experiment erhält!
 
-const random_bool = () => Math.random() < 0.5;
+function random_int(max) {
+    return document.new_random_integer(max);
+}
 
-const random_int = (max) => Math.floor(Math.random() * max);
+function random_bool() {
+    return document.new_random_integer(2) > 0;
+}
 
 // Funktion zum Generieren eines zufälligen if-else-Statements
 const generateStatement = (statements) => {
@@ -41,7 +45,7 @@ const indentCode = (code) => {
     return code;
 }
 const generateTask = () => {
-    const statement = generateStatement(6);
+    const statement = generateStatement(8);
     const solution = getSolution(statement);
     const indentedStatement = indentCode(statement);
     return {
@@ -61,11 +65,10 @@ document.experiment_definition(
         layout: [
             {variable: "Indentation", treatments: ["Indented", "Not Indented"]}
         ],
-        repetitions: 2,                    // Anzahl der Wiederholungen pro Treatmentcombination
+        repetitions: 6,  // Anzahl der Wiederholungen pro Treatmentcombination
         accepted_responses: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], // Tasten, die vom Experiment als Eingabe akzeptiert werden
         task_configuration: (t) => {
             const task = generateTask();
-            console.log(task)
             if (t.treatment_combination[0].value === "Indented")
                 t.code = task.indentedStatement;
             else
@@ -77,7 +80,7 @@ document.experiment_definition(
             // im Feld after_task_string steht eine Lambda-Funktion, die ausgeführt wird
             // wenn eine Task beantwortet wurde. Das Ergebnis der Funktion muss ein String
             // sein.
-            t.after_task_string = () => "Some nice text between the tasks";
+            t.after_task_string = () => "You answered the task. The correct answer is " + t.expected_answer + ".\n\nPress [Enter] to continue.";
         }
     }
 );
