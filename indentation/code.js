@@ -26,7 +26,18 @@ const getSolution = (statement) => {
 };
 
 const indentCode = (code) => {
-//todo: implement
+    const rows = code.split("\n");
+    let indent = 0;
+    for (let i = 0; i < rows.length; i++) {
+        if (rows[i].includes("}")) {
+            indent--;
+        }
+        rows[i] = " ".repeat(indent * 4) + rows[i];
+        if (rows[i].includes("{")) {
+            indent++;
+        }
+    }
+    code = rows.join("\n");
     return code;
 }
 const generateTask = () => {
