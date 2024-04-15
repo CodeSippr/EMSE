@@ -10,3 +10,5 @@ copy_experiments:
   stage: copy
   script:
     - cp -r indentation/* public
+    - cd public
+    - ls
