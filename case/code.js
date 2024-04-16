@@ -217,9 +217,9 @@ document.experiment_definition(
     {
         experiment_name: "CamelCase vs. Snake_Case Experiment",
         seed: "42",
-        introduction_pages: ["Zähle in folgenden Strings die Häufigkeit eines bestimmten Wortes. Anworte mit dem Numpad. Du kannst nach jeder Antwort eine Pause machen. \n\nPress [Enter] to continue."],
-        pre_run_instruction: "Gleich gehts los.\n\nWhen you press [Enter] the tasks directly start.",
-        finish_pages: ["Thanks for nothing. When you press [Enter], the experiment's data will be downloaded."],
+        introduction_pages: ["Zähle in folgenden Strings die Häufigkeit eines bestimmten Wortes. Es werden Strings mit drei verschiedenen Schreibweisen vorkommen. \n\nMit [Enter] lässt sich das Traning starten, mit [Escape] und dann [Strg]+[E] das eigentliche Experiment. \n\nPress [Enter] to continue."],
+        pre_run_instruction: "Ihr müsst die Wörter zählen und die Zahlentasten [1] bis [9] drücken. \n\nDu kannst nach jeder Antwort eine Pause machen.\n\nWhen you press [Enter] the tasks directly start.",
+        finish_pages: ["Danke für die Teilnahme. Du hast dir einen virtuellen Keks verdient. When you press [Enter], the experiment's data will be downloaded."],
         layout: [
             {variable: "Case", treatments: ["Camel_Case", "Snake_Case", "No_Case"]}
         ],
@@ -227,7 +227,7 @@ document.experiment_definition(
         accepted_responses: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], // Tasten, die vom Experiment als Eingabe akzeptiert werden
         task_configuration: (t) => {
             const length = random_int(12) + 5;
-            const duplicateGoal = random_int(length - 3) + 1;
+            const duplicateGoal = (random_int(length - 3) + 1) % 9;
             const task = getWordList(length, duplicateGoal);
             const wordList = task.list;
             const duplicateCount = task.duplicateCount;
@@ -244,7 +244,7 @@ document.experiment_definition(
             // im Feld after_task_string steht eine Lambda-Funktion, die ausgeführt wird
             // wenn eine Task beantwortet wurde. Das Ergebnis der Funktion muss ein String
             // sein.
-            t.after_task_string = () => "Correct Answer is " + duplicateCount + "\n\nSome nice text between the tasks";
+            t.after_task_string = () => "Die richtige Antwort ist " + duplicateCount + "\n\nSome nice text between the tasks";
         }
     }
 );
