@@ -1,14 +1,3 @@
-// Das Beispielexperiment erzeugt als Fragen nur die Zahlen 0-9.
-// Ein Experimentteilnehmer kann die Zahlen 1-3 drücken
-//
-// Die Experimentdefinition erfolgt über Aufruf der Funktion
-//  - document.experiment_definition(...)
-// Falls eine Zufallszahl benötigt wird, erhält man sie durch den Methodenaufruf
-//  - document.new_random_integer(...Obergrenze...);
-//
-// WICHTIG: Man sollte new_random_integer nur innerhalb  der Lambda-Funktion ausführen, also NICHT
-// an einer anderen Stelle, damit man ein reproduzierbares Experiment erhält!
-
 function random_int(max) {
     return document.new_random_integer(max);
 }
@@ -17,7 +6,6 @@ function random_bool() {
     return document.new_random_integer(2) > 0;
 }
 
-// Funktion zum Generieren eines zufälligen if-else-Statements
 const generateStatement = (statements) => {
     const bool = random_bool();
     const trueNumber = random_int(statements - 1);
@@ -54,7 +42,7 @@ const generateTask = () => {
         solution: solution
     }
 }
-// Das hier ist die eigentliche Experimentdefinition
+
 document.experiment_definition(
     {
         experiment_name: "Indentation Experiment in if-else-Statements",
@@ -65,8 +53,8 @@ document.experiment_definition(
         layout: [
             {variable: "Indentation", treatments: ["Indented", "Not Indented"]}
         ],
-        repetitions: 6,  // Anzahl der Wiederholungen pro Treatmentcombination
-        accepted_responses: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], // Tasten, die vom Experiment als Eingabe akzeptiert werden
+        repetitions: 10,
+        accepted_responses: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
         task_configuration: (t) => {
             const task = generateTask();
             if (t.treatment_combination[0].value === "Indented")
@@ -75,11 +63,6 @@ document.experiment_definition(
                 t.code = task.statement;
 
             t.expected_answer = "" + task.solution;
-
-
-            // im Feld after_task_string steht eine Lambda-Funktion, die ausgeführt wird
-            // wenn eine Task beantwortet wurde. Das Ergebnis der Funktion muss ein String
-            // sein.
             t.after_task_string = () => "You answered the task. The correct answer is " + t.expected_answer + ".\n\nPress [Enter] to continue.";
         }
     }
