@@ -233,7 +233,7 @@ document.experiment_definition(
             const duplicateCount = task.duplicateCount;
             const duplicateWord = task.duplicateWord;
             if (t.treatment_combination[0].value === "Camel_Case")
-                t.code = "Count the word " + duplicateWord + "\n\n" + renderCamelCase(wordList)
+                t.code = "Count the word " + duplicateWord + "\n\n" + renderCamelCase(wordList);
             else if (t.treatment_combination[0].value === "Snake_Case")
                 t.code = "Count the word " + duplicateWord + "\n\n" + renderSnakeCase(wordList)
             else
