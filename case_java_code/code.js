@@ -46,7 +46,7 @@ function getRandomSnakeCase() {
 }
 
 function getRandomCamelCase() {
-    return renderSnakeCase(getRandomWords());
+    return renderCamelCase(getRandomWords());
 }
 
 function getCodeWithRowNumbers(code) {
@@ -56,6 +56,14 @@ function getCodeWithRowNumbers(code) {
         codeWithRowNumbers += `${i + 1}:    ${lines[i]}\n`;
     }
     return codeWithRowNumbers;
+}
+
+function getSetterVarName(isCamelCase, word) {
+    if (isCamelCase) {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    } else {
+        return "_" + word;
+    }
 }
 
 function generateTask(isErrorCode, isCamelCase, errorLineRange) {
@@ -78,10 +86,10 @@ function generateTask(isErrorCode, isCamelCase, errorLineRange) {
 
     // Getter und Setter generieren
     let getterSetterCode = '';
-    getterSetterCode += `    private ${type1} get${variable1.charAt(0).toUpperCase() + variable1.slice(1)}() {\n        return this.${variable1};\n    }\n`;
-    getterSetterCode += `    public void set${variable1.charAt(0).toUpperCase() + variable1.slice(1)}(${type1} ${variable1}) {\n        this.${variable1} = ${variable1};\n    }\n`;
-    getterSetterCode += `    private ${type2} get${variable2.charAt(0).toUpperCase() + variable2.slice(1)}() {\n        return this.${variable2};\n    }\n`;
-    getterSetterCode += `    public void set${variable2.charAt(0).toUpperCase() + variable2.slice(1)}(${type2} ${variable2}) {\n        this.${variable2} = ${variable2};\n    }\n`;
+    getterSetterCode += `    private ${type1} get${getSetterVarName(isCamelCase, variable1)}() {\n        return this.${variable1};\n    }\n`;
+    getterSetterCode += `    public void set${getSetterVarName(isCamelCase, variable1)}(${type1} ${variable1}) {\n        this.${variable1} = ${variable1};\n    }\n`;
+    getterSetterCode += `    private ${type2} get${getSetterVarName(isCamelCase, variable2)}() {\n        return this.${variable2};\n    }\n`;
+    getterSetterCode += `    public void set${getSetterVarName(isCamelCase, variable2)}(${type2} ${variable2}) {\n        this.${variable2} = ${variable2};\n    }\n`;
 
     let code = `public class ${className} {\n${variableDeclarationCode}${constructorCode}${getterSetterCode}}`
     let errorLine = -1;
