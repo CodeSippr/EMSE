@@ -10,7 +10,7 @@
 // an einer anderen Stelle, damit man ein reproduzierbares Experiment erhält!
 
 let booleans = ["is", "has", "can", "deleted", "blocked", "updated", "created"];
-let words = ["apple", "banana", "carrot", "dog", "elephant", "fish", "grape", "hat", "jacket", "kiwi", "lemon", "mango", "notebook", "orange", "pear", "quilt", "rabbit", "strawberry", "turtle", "umbrella", "vase", "watermelon", "xylophone", "yogurt", "zebra", "ant", "ball", "cat", "dolphin", "egg", "fox", "guitar", "hamster", "ink", "jellyfish", "koala", "lion", "monkey", "noodle", "owl", "penguin", "quokka", "rhino", "snail", "tiger", "unicorn", "violin", "walrus", "xylophone"];
+let words = ["apple", "banana", "carrot", "dog", "elephant", "fish", "grape", "hat", "jacket", "kiwi", "lemon", "mango", "orange", "pear", "quilt", "rabbit", "turtle", "umbrella", "vase", "xylophone", "yogurt", "zebra", "ant", "ball", "cat", "dolphin", "egg", "fox", "guitar", "hamster", "ink", "koala", "lion", "monkey", "noodle", "owl", "penguin", "rhino", "snail", "tiger", "unicorn", "violin", "walrus"];
 let types = ["String", "int", "boolean", "double", "char", "float", "long", "short", "byte", "List<String>", "List<int>", "List<boolean>", "List<double>", "List<char>", "List<float>", "List<long>", "List<short>", "List<byte>"];
 let modifiers = ["public", "private", "protected"];
 
