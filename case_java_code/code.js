@@ -38,6 +38,10 @@ function random_int(border) {
     return document.new_random_integer(border);
 }
 
+function random_int_in_range(from, to) {
+    return document.new_random_integer(to - from) + from;
+}
+
 function random_bool() {
     return document.new_random_integer(2) > 0;
 }
@@ -72,7 +76,9 @@ function getSetterVarName(isCamelCase, word) {
 }
 
 function generateTask(isErrorCode, isCamelCase, errorLineRange) {
-    errorLineRange = parseInt(errorLineRange.split("-")[1]);
+    const split = errorLineRange.split("-");
+    const from = parseInt(split[0]) - 1;
+    const to = parseInt(split[1]) - 1;
     // Zufällige Variablennamen generieren
     let variable1 = isCamelCase ? getRandomCamelCase() : getRandomSnakeCase();
     let variable2 = isCamelCase ? getRandomCamelCase() : getRandomSnakeCase();
@@ -104,7 +110,7 @@ function generateTask(isErrorCode, isCamelCase, errorLineRange) {
         let var1 = null;
         let count = 500;
         while (errorLine < 0 && count > 0) {
-            const randomLine = random_int(errorLineRange);
+            const randomLine = random_int_in_range(from, to);
             if (lines[randomLine].includes(variable1) || lines[randomLine].includes(variable2)) {
                 if (lines[randomLine].includes(variable1)) {
                     var1 = true;
@@ -149,10 +155,10 @@ document.experiment_definition(
         finish_pages: ["Thanks for nothing. When you press [Enter], the experiment's data will be downloaded."],
         layout: [
             {variable: "Case", treatments: ["Camel_Case", "Snake_Case"]},
-            {variable: "is_error_code", treatments: ["true", "false"]},
-            {variable: "error_line", treatments: ["1-5", "6-10", "11-15", "16-20"]}
+            {variable: "is_error_code", treatments: ["true,false"]},
+            {variable: "error_line", treatments: ["4-7", "8-13", "14-19"]}
         ],
-        repetitions: 2,                    // Anzahl der Wiederholungen pro Treatmentcombination
+        repetitions: 5,                    // Anzahl der Wiederholungen pro Treatmentcombination
         accepted_responses: ["1", "2"], // Tasten, die vom Experiment als Eingabe akzeptiert werden
         task_configuration: (t) => {
             const isErrorCode = t.treatment_combination[1].value === "true";
@@ -160,7 +166,6 @@ document.experiment_definition(
             t.code = task.javaCode;
             t.expected_answer = isErrorCode ? "1" : "2";
             const errorLine = isErrorCode ? "The Code was incorrect at line " + task.errorLine + "." : "The Code was correct.";
-            console.log()
             t.after_task_string = () => {
                 const correctAnswer = t.given_answer === t.expected_answer ? "CORRECT." : "WRONG. \nThe correct answer is " + t.expected_answer + ".";
                 return "Your answer was " + correctAnswer + "\n" + errorLine + "\n\nPress [Enter] to continue.";
