@@ -11,11 +11,16 @@
 
 let booleans = ["is", "has", "can", "deleted", "blocked", "updated", "created"];
 let words = ["apple", "banana", "carrot", "dog", "elephant", "fish", "grape", "hat", "jacket", "kiwi", "lemon", "mango", "notebook", "orange", "pear", "quilt", "rabbit", "strawberry", "turtle", "umbrella", "vase", "watermelon", "xylophone", "yogurt", "zebra", "ant", "ball", "cat", "dolphin", "egg", "fox", "guitar", "hamster", "ink", "jellyfish", "koala", "lion", "monkey", "noodle", "owl", "penguin", "quokka", "rhino", "snail", "tiger", "unicorn", "violin", "walrus", "xylophone"];
-let types = ["String", "int", "boolean", "double", "char", "float", "long", "short", "byte", "void", "List<String>", "List<int>", "List<boolean>", "List<double>", "List<char>", "List<float>", "List<long>", "List<short>", "List<byte>", "List<void>"];
+let types = ["String", "int", "boolean", "double", "char", "float", "long", "short", "byte", "List<String>", "List<int>", "List<boolean>", "List<double>", "List<char>", "List<float>", "List<long>", "List<short>", "List<byte>"];
+let modifiers = ["public", "private", "protected"];
+
+function getRandomModifier() {
+    return modifiers[document.new_random_integer(modifiers.length)];
+}
 
 function getRandomWords() {
-    let boolean = booleans[document.new_random_integer(booleans.length - 1)];
-    let word = words[document.new_random_integer(words.length - 1)];
+    let boolean = booleans[document.new_random_integer(booleans.length)];
+    let word = words[document.new_random_integer(words.length)];
     return [boolean, word];
 }
 
@@ -38,7 +43,7 @@ function random_bool() {
 }
 
 function getRandomType() {
-    return types[random_int(types.length - 1)];
+    return types[random_int(types.length)];
 }
 
 function getRandomSnakeCase() {
@@ -53,7 +58,7 @@ function getCodeWithRowNumbers(code) {
     const lines = code.split("\n");
     let codeWithRowNumbers = '';
     for (let i = 0; i < lines.length; i++) {
-        codeWithRowNumbers += `${i + 1}:    ${lines[i]}\n`;
+        codeWithRowNumbers += `${i + 1}:  ${lines[i]}\n`;
     }
     return codeWithRowNumbers;
 }
@@ -79,19 +84,19 @@ function generateTask(isErrorCode, isCamelCase, errorLineRange) {
 
     // Variablendeklarationen generieren
 
-    let variableDeclarationCode = `    private ${type1} ${variable1};\n    private ${type2} ${variable2};\n`;
+    let variableDeclarationCode = `    ${getRandomModifier()} ${type1} ${variable1};\n    private ${type2} ${variable2};\n`;
 
     // Konstruktor generieren
-    let constructorCode = `    protected ${className}(${type1} ${variable1}, ${type2} ${variable2}) {\n        this.${variable1} = ${variable1};\n        this.${variable2} = ${variable2};\n    }\n`;
+    let constructorCode = `    ${getRandomModifier()} ${className}(${type1} ${variable1}, ${type2} ${variable2}) {\n        this.${variable1} = ${variable1};\n        this.${variable2} = ${variable2};\n    }\n`;
 
     // Getter und Setter generieren
     let getterSetterCode = '';
-    getterSetterCode += `    private ${type1} get${getSetterVarName(isCamelCase, variable1)}() {\n        return this.${variable1};\n    }\n`;
-    getterSetterCode += `    public void set${getSetterVarName(isCamelCase, variable1)}(${type1} ${variable1}) {\n        this.${variable1} = ${variable1};\n    }\n`;
-    getterSetterCode += `    private ${type2} get${getSetterVarName(isCamelCase, variable2)}() {\n        return this.${variable2};\n    }\n`;
-    getterSetterCode += `    public void set${getSetterVarName(isCamelCase, variable2)}(${type2} ${variable2}) {\n        this.${variable2} = ${variable2};\n    }\n`;
+    getterSetterCode += `    ${getRandomModifier()} ${type1} get${getSetterVarName(isCamelCase, variable1)}() {\n        return this.${variable1};\n   }\n`;
+    getterSetterCode += `   ${getRandomModifier()} void set${getSetterVarName(isCamelCase, variable1)}(${type1} ${variable1}) {\n       this.${variable1} = ${variable1};\n   }\n`;
+    getterSetterCode += `   ${getRandomModifier()} ${type2} get${getSetterVarName(isCamelCase, variable2)}() {\n       return this.${variable2};\n   }\n`;
+    getterSetterCode += `   ${getRandomModifier()} void set${getSetterVarName(isCamelCase, variable2)}(${type2} ${variable2}) {\n       this.${variable2} = ${variable2};\n   }\n`;
 
-    let code = `public class ${className} {\n${variableDeclarationCode}${constructorCode}${getterSetterCode}}`
+    let code = ` ${getRandomModifier()} class ${className} {\n${variableDeclarationCode}${constructorCode}${getterSetterCode}}`
     let errorLine = -1;
     //Generate Error at variable name
     if (isErrorCode) {
@@ -99,7 +104,7 @@ function generateTask(isErrorCode, isCamelCase, errorLineRange) {
         let var1 = null;
         let count = 500;
         while (errorLine < 0 && count > 0) {
-            const randomLine = random_int(errorLineRange - 1);
+            const randomLine = random_int(errorLineRange);
             if (lines[randomLine].includes(variable1) || lines[randomLine].includes(variable2)) {
                 if (lines[randomLine].includes(variable1)) {
                     var1 = true;
@@ -110,12 +115,12 @@ function generateTask(isErrorCode, isCamelCase, errorLineRange) {
         }
         if (var1) {
             //Remove random char of variable1
-            const randomChar = random_int(variable1.length - 1);
+            const randomChar = random_int(variable1.length);
             const startIndexOfVar1 = lines[errorLine].indexOf(variable1);
             lines[errorLine] = lines[errorLine].substring(0, startIndexOfVar1 + randomChar) + lines[errorLine].substring(startIndexOfVar1 + randomChar + 1);
         } else {
             //Remove random char of variable2 in line
-            const randomChar = random_int(variable2.length - 1);
+            const randomChar = random_int(variable2.length);
             const startIndexOfVar2 = lines[errorLine].indexOf(variable2);
             lines[errorLine] = lines[errorLine].substring(0, startIndexOfVar2 + randomChar) + lines[errorLine].substring(startIndexOfVar2 + randomChar + 1);
         }
@@ -158,7 +163,7 @@ document.experiment_definition(
             console.log()
             t.after_task_string = () => {
                 const correctAnswer = t.given_answer === t.expected_answer ? "CORRECT." : "WRONG. \nThe correct answer is " + t.expected_answer + ".";
-                return "Your answer is " + correctAnswer + "\n" + errorLine + "\n\nPress [Enter] to continue.";
+                return "Your answer was " + correctAnswer + "\n" + errorLine + "\n\nPress [Enter] to continue.";
             };
         }
     }
