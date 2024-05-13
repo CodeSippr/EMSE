@@ -147,7 +147,7 @@ document.experiment_definition(
             {variable: "is_error_code", treatments: ["true", "false"]},
             {variable: "error_line", treatments: ["1-5", "6-10", "11-15", "16-20"]}
         ],
-        repetitions: 1,                    // Anzahl der Wiederholungen pro Treatmentcombination
+        repetitions: 3,                    // Anzahl der Wiederholungen pro Treatmentcombination
         accepted_responses: ["1", "2"], // Tasten, die vom Experiment als Eingabe akzeptiert werden
         task_configuration: (t) => {
             const isErrorCode = t.treatment_combination[1].value === "true";
@@ -155,7 +155,11 @@ document.experiment_definition(
             t.code = task.javaCode;
             t.expected_answer = isErrorCode ? "1" : "2";
             const errorLine = isErrorCode ? "The Code was incorrect at line " + task.errorLine + "." : "The Code was correct.";
-            t.after_task_string = () => "You answered the task. The correct answer is " + t.expected_answer + ".\n" + errorLine + "\n\nPress [Enter] to continue.";
+            console.log()
+            t.after_task_string = () => {
+                const correctAnswer = t.given_answer === t.expected_answer ? "CORRECT." : "WRONG. \nThe correct answer is " + t.expected_answer + ".";
+                return "Your answer is " + correctAnswer + "\n" + errorLine + "\n\nPress [Enter] to continue.";
+            };
         }
     }
 );
