@@ -155,7 +155,7 @@ document.experiment_definition(
         finish_pages: ["Thanks for nothing. When you press [Enter], the experiment's data will be downloaded."],
         layout: [
             {variable: "Case", treatments: ["Camel_Case", "Snake_Case"]},
-            {variable: "is_error_code", treatments: ["true,false"]},
+            {variable: "is_error_code", treatments: ["true", "false"]},
             {variable: "error_line", treatments: ["4-7", "8-13", "14-19"]}
         ],
         repetitions: 5,                    // Anzahl der Wiederholungen pro Treatmentcombination
