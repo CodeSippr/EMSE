@@ -145,14 +145,14 @@ document.experiment_definition(
         experiment_name: "Case Code Errors",
         seed: "42",
         introduction_pages: ["In this experiment you will be shown Java code snippets.\nYour task is to determine whether the code is correct or not. \nIf the code is incorrect, you have to press the key '1' for correct code and the '2' for incorrect code."],
-        pre_run_instruction: "Now the Experiment will start. \nPress '1' for correct code and '2' for incorrect code.\n\nPress [Enter] to start the experiment.",
+        pre_run_instruction: "Now the Experiment will start. \nPress '2' for correct code and '1' for incorrect code.\n\nPress [Enter] to start the experiment.",
         finish_pages: ["Thanks for nothing. When you press [Enter], the experiment's data will be downloaded."],
         layout: [
             {variable: "Case", treatments: ["Camel_Case", "Snake_Case"]},
             {variable: "is_error_code", treatments: ["true", "false"]},
             {variable: "error_line", treatments: ["1-5", "6-10", "11-15", "16-20"]}
         ],
-        repetitions: 3,                    // Anzahl der Wiederholungen pro Treatmentcombination
+        repetitions: 2,                    // Anzahl der Wiederholungen pro Treatmentcombination
         accepted_responses: ["1", "2"], // Tasten, die vom Experiment als Eingabe akzeptiert werden
         task_configuration: (t) => {
             const isErrorCode = t.treatment_combination[1].value === "true";
