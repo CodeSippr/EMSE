@@ -85,6 +85,7 @@
 </html>
 
 <script>
+    const baseLink = "https://htmlpreview.github.io/?https://raw.githubusercontent.com/CodeSippr/EMSE/main/";
     const experiments = [{
         name: "Case Experiment with Java Code",
         link: "case_java_code/",
@@ -102,7 +103,7 @@
     experiments.forEach(experiment => {
         const experimentDiv = document.createElement("div");
         experimentDiv.style.margin = "10px";
-        experimentDiv.innerHTML = `<a href="${experiment.link}">${experiment.name}</a>`;
+        experimentDiv.innerHTML = `<a href="${baseLink}${experiment.link}index.html">${experiment.name}</a>`;
         experimentsDiv.appendChild(experimentDiv);
     })
 </script>

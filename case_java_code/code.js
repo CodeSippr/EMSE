@@ -158,7 +158,7 @@ document.experiment_definition(
             {variable: "is_error_code", treatments: ["true", "false"]},
             {variable: "error_line", treatments: ["4-7", "8-13", "14-19"]}
         ],
-        repetitions: 5,                    // Anzahl der Wiederholungen pro Treatmentcombination
+        repetitions: 3,                    // Anzahl der Wiederholungen pro Treatmentcombination
         accepted_responses: ["1", "2"], // Tasten, die vom Experiment als Eingabe akzeptiert werden
         task_configuration: (t) => {
             const isErrorCode = t.treatment_combination[1].value === "true";
