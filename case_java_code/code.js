@@ -114,6 +114,8 @@ function generateTask(isErrorCode, isCamelCase, errorLineRange) {
             if (lines[randomLine].includes(variable1) || lines[randomLine].includes(variable2)) {
                 if (lines[randomLine].includes(variable1)) {
                     var1 = true;
+                } else {
+                    var1 = false;
                 }
                 errorLine = randomLine;
             }
